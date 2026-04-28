@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="https://via.placeholder.com/150x150/007bff/ffffff?text=EduTask" alt="EduTask Logo" width="120" />
+  <img width="512" height="279" alt="image" src="https://github.com/user-attachments/assets/97122c02-8072-4498-85bb-e111781418f0" />
   
-  # 🚀 EduTask
+  # 
   
   **Sistema Integral de Gestión de Tareas y Proyectos Ágiles**
 
