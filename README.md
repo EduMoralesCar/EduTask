@@ -1,162 +1,126 @@
-# 🚀 EduTask - Sistema de Gestión de Tareas SCRUM
+<div align="center">
+  <img src="https://via.placeholder.com/150x150/007bff/ffffff?text=EduTask" alt="EduTask Logo" width="120" />
+  
+  # 🚀 EduTask
+  
+  **Sistema Integral de Gestión de Tareas y Proyectos Ágiles**
 
-EduTask es un sistema completo de gestión de proyectos y tareas similar a JIRA, diseñado para equipos que utilizan metodologías ágiles como SCRUM. Ofrece funcionalidades avanzadas de colaboración, gestión de proyectos y seguimiento de tareas.
+  [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
+  [![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](#)
+  [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](#)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](#)
+</div>
 
-## ✨ Características Principales
+<hr/>
 
-### 🔐 Autenticación y Seguridad
-- Sistema de registro y login seguro
-- Verificación de correos electrónicos
-- Recuperación de contraseña por correo
-- Tokens JWT para autenticación
-- Validaciones de seguridad robustas
+## 📖 ¿Qué es EduTask?
 
-### 📊 Gestión de Proyectos
-- Creación y gestión de proyectos
-- Soporte para SCRUM, Kanban y Waterfall
-- Roles de usuario (Administrador, Miembro, Desarrollador, Tester)
-- Sistema de invitaciones por correo
-- Confirmación de eliminación de proyectos
+**EduTask** es una plataforma avanzada de gestión de proyectos diseñada para facilitar el trabajo en equipo mediante metodologías ágiles como **SCRUM** y **Kanban**. 
+Similar a herramientas de la industria como JIRA, EduTask permite a los equipos planificar, rastrear y entregar software de manera eficiente, ofreciendo una experiencia fluida, interactiva y centralizada.
 
-### 📋 Gestión de Tareas
-- Creación y gestión de tareas
-- Tipos de tareas (Historias, Tareas, Bugs, Épicas, Subtareas)
-- Prioridades y estados personalizables
-- Asignación de tareas a usuarios
-- Comentarios y seguimiento de cambios
-- Story points y estimaciones
+✨ **Características Destacadas:**
+- 🔐 **Seguridad:** Sistema de autenticación robusto con JWT y roles de usuario.
+- 📊 **Interactividad:** Tableros Kanban dinámicos para el seguimiento de tareas.
+- 👥 **Colaboración:** Gestión de miembros, invitaciones por correo y notificaciones.
+- 🎯 **Agilidad:** Soporte nativo para sprints, épicas, historias de usuario y estimaciones.
 
-### 👥 Colaboración
-- Invitación de miembros por correo
-- Gestión de roles y permisos
-- Notificaciones en tiempo real
-- Actividad y comentarios en tareas
+---
 
-### 🎯 Metodologías Ágiles
-- Sprints y gestión de backlog
-- Burndown charts
-- Velocity tracking
-- Tableros Kanban
+## 🛠️ Herramientas de Desarrollo (Tech Stack)
 
-## 🛠️ Stack Tecnológico
+El proyecto está construido sobre un stack moderno y escalable (MERN Stack + TypeScript), garantizando un alto rendimiento:
 
-### Backend
-- **Node.js** - Entorno de ejecución
-- **Express.js** - Framework web
-- **MongoDB** - Base de datos NoSQL
-- **Mongoose** - ODM para MongoDB
-- **JWT** - Autenticación
-- **Nodemailer** - Envío de correos
-- **bcryptjs** - Encriptación de contraseñas
+### 🌐 Frontend (Cliente)
+- **React.js** & **TypeScript** - Construcción de interfaces de usuario tipadas y seguras.
+- **Material-UI (MUI)** - Sistema de diseño y componentes visuales atractivos.
+- **React Router** - Enrutamiento dinámico en el lado del cliente.
+- **Axios** - Cliente HTTP para el consumo eficiente de la API.
 
-### Frontend
-- **React** - Framework de UI
-- **TypeScript** - Tipado estático
-- **Material-UI (MUI)** - Biblioteca de componentes
-- **React Router** - Enrutamiento
-- **React Hook Form** - Formularios
-- **Yup** - Validación de esquemas
-- **Axios** - Cliente HTTP
+### ⚙️ Backend (Servidor)
+- **Node.js** & **Express.js** - Lógica del servidor, enrutamiento y API RESTful.
+- **MongoDB** & **Mongoose** - Base de datos NoSQL orientada a documentos y ODM.
+- **JWT & bcryptjs** - Autenticación sin estado y encriptación segura de contraseñas.
+- **Nodemailer** - Servicio integrado para el envío de correos transaccionales.
+
+---
 
 ## 📋 Requisitos Previos
 
-- Node.js (v16 o superior)
-- MongoDB (v4.4 o superior)
-- npm o yarn
-- Cuenta de correo para envío de emails (Gmail, Outlook, etc.)
+Antes de comenzar, asegúrate de tener instaladas las siguientes herramientas en tu entorno local:
 
-## 🚀 Instalación
+- 🟢 **[Node.js](https://nodejs.org/)** (v16.x o versión superior).
+- 🍃 **[MongoDB](https://www.mongodb.com/)** (v4.4 o superior) ejecutándose localmente, o una URI de conexión de MongoDB Atlas.
+- 📦 **npm** (incluido con Node.js) o **Yarn** como gestor de paquetes.
+- ✉️ Una cuenta de correo electrónico (ej. Gmail con contraseña de aplicación) para el envío de notificaciones.
 
-### 1. Clonar el repositorio
+---
+
+## 🚀 Clonación y Ejecución Local
+
+Sigue estos pasos para descargar el código fuente y levantar el proyecto en tu máquina local en cuestión de minutos.
+
+### 1️⃣ Clonar el Repositorio
+
+Abre tu terminal de preferencia y ejecuta el siguiente comando para clonar el proyecto a través de su enlace oficial:
+
 ```bash
-git clone <repositorio-url>
+git clone https://github.com/tu-usuario/EduTask.git
 cd EduTask
 ```
+> 💡 *Nota: Recuerda reemplazar `tu-usuario` por el nombre de usuario o la ruta real del repositorio en GitHub.*
 
-### 2. Configurar el Backend
+### 2️⃣ Configurar y Levantar el Backend
+
 ```bash
+# Navegar al directorio del servidor
 cd backend
-npm install
-```
 
-### 3. Configurar variables de entorno del Backend
-```bash
+# Instalar todas las dependencias necesarias
+npm install
+
+# Generar el archivo de variables de entorno
 cp .env.example .env
 ```
 
-Edita el archivo `.env` con tu configuración:
+**Configura tu archivo `.env` (backend/.env) con los siguientes datos esenciales:**
 ```env
-# Configuración del Servidor
 PORT=5000
-NODE_ENV=development
-
-# Base de Datos MongoDB
 MONGODB_URI=mongodb://localhost:27017/edutask
-
-# JWT Secret
-JWT_SECRET=your_super_secret_jwt_key_here_change_in_production
-
-# Configuración de Correo (SMTP)
+JWT_SECRET=tu_secreto_super_seguro_jwt
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_app_password
-
-# URL del Frontend
+SMTP_USER=tu_correo@gmail.com
+SMTP_PASS=tu_contraseña_de_aplicacion
 FRONTEND_URL=http://localhost:3000
 ```
 
-### 4. Configurar el Frontend
+**Iniciar el servidor backend en modo desarrollo:**
 ```bash
-cd ../frontend
-npm install
-```
-
-### 5. Configurar variables de entorno del Frontend
-```bash
-cp .env.example .env
-```
-
-Edita el archivo `.env`:
-```env
-# URL del Backend API
-REACT_APP_API_URL=http://localhost:5000/api
-
-# Configuración de la aplicación
-REACT_APP_NAME=EduTask
-REACT_APP_VERSION=1.0.0
-```
-
-## 🏃‍♂️ Ejecución
-
-### 1. Iniciar MongoDB
-Asegúrate de que MongoDB esté corriendo en tu sistema.
-
-### 2. Iniciar el Backend
-```bash
-cd backend
 npm run dev
 ```
 
-El backend iniciará en `http://localhost:5000`
+### 3️⃣ Configurar y Levantar el Frontend
 
-### 3. Iniciar el Frontend
+Abre una nueva ventana o pestaña en tu terminal:
+
 ```bash
-cd frontend
+# Volver a la raíz y entrar al directorio del cliente
+cd ../frontend
+
+# Instalar las dependencias de la UI
+npm install
+
+# Generar el archivo de variables de entorno para React
+cp .env.example .env
+```
+
+**Iniciar la aplicación web:**
+```bash
 npm start
 ```
 
-El frontend iniciará en `http://localhost:3000`
+🎉 **¡Todo listo!** 
+- El cliente (Frontend) estará disponible interactivo en: `http://localhost:3000`
+- La API (Backend) estará escuchando peticiones en: `http://localhost:5000`
 
-## 📧 Configuración de Correo
-
-Para Gmail:
-1. Activa la autenticación de dos factores
-2. Genera una "Contraseña de aplicación"
-3. Usa esa contraseña en `SMTP_PASS`
-
-Para otros proveedores:
-- Outlook: Configura SMTP con tus credenciales
-- SendGrid: Usa tu API key
-- Mailgun: Configura según su documentación
-
+---
