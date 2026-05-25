@@ -74,6 +74,7 @@ const register = async (req, res) => {
           firstName: user.firstName,
           lastName: user.lastName,
           fullName: user.fullName,
+          avatar: user.avatar,
           isEmailVerified: user.isEmailVerified,
           preferences: user.preferences
         }
@@ -149,6 +150,7 @@ const login = async (req, res) => {
           firstName: user.firstName,
           lastName: user.lastName,
           fullName: user.fullName,
+          avatar: user.avatar,
           isEmailVerified: user.isEmailVerified,
           preferences: user.preferences,
           lastLogin: user.lastLogin
@@ -258,8 +260,15 @@ const forgotPassword = async (req, res) => {
 
     const { email } = req.body;
 
-    // Validar existencia real del correo
-    const { valid, reason, validators } = await emailValidator.validate(email);
+    // Validar existencia real del correo (desactivando la validación SMTP que falla en entornos locales/residenciales)
+    const { valid, reason, validators } = await emailValidator.validate({
+      email,
+      validateRegex: true,
+      validateMx: true,
+      validateTypo: true,
+      validateDisposable: true,
+      validateSMTP: false
+    });
     if (!valid) {
       return res.status(400).json({
         success: false,

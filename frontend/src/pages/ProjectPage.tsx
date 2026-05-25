@@ -38,6 +38,7 @@ import {
   ListItemText,
   ListItemAvatar,
   Divider,
+  Tooltip,
 } from '@mui/material';
 import {
   Add,
@@ -202,6 +203,19 @@ const ProjectPage: React.FC = () => {
     }
   };
 
+  const handleQuickStatusChange = async (taskId: string, newStatus: Task['status']) => {
+    try {
+      const response = await apiService.updateTask(taskId, { status: newStatus });
+      if (response.success) {
+        loadTasks();
+      } else {
+        setError(response.message || 'Error al actualizar el estado de la tarea');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Error al actualizar el estado de la tarea');
+    }
+  };
+
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, task: Task) => {
     setAnchorEl(event.currentTarget);
     setSelectedTask(task);
@@ -243,6 +257,17 @@ const ProjectPage: React.FC = () => {
     }
   };
 
+  const getPriorityHexColor = (priority: string) => {
+    switch (priority) {
+      case 'highest': return '#EF4444';
+      case 'high': return '#F59E0B';
+      case 'medium': return '#3B82F6';
+      case 'low': return '#10B981';
+      case 'lowest': return '#94A3B8';
+      default: return '#94A3B8';
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'done': return 'success';
@@ -253,6 +278,14 @@ const ProjectPage: React.FC = () => {
       default: return 'default';
     }
   };
+
+  const KANBAN_STATUSES: { key: Task['status']; label: string; color: string }[] = [
+    { key: 'todo', label: 'Por Hacer', color: '#64748B' },
+    { key: 'in-progress', label: 'En Progreso', color: '#3B82F6' },
+    { key: 'in-review', label: 'En Revisión', color: '#F59E0B' },
+    { key: 'blocked', label: 'Bloqueado', color: '#EF4444' },
+    { key: 'done', label: 'Completado', color: '#10B981' },
+  ];
 
   if (isLoading) {
     return (
@@ -279,12 +312,12 @@ const ProjectPage: React.FC = () => {
       <Box sx={{ mb: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
           <Box>
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
               {project.name}
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-              <Chip label={project.key} size="small" color="primary" />
-              <Chip label={project.type} size="small" variant="outlined" />
+              <Chip label={project.key} size="small" color="primary" sx={{ fontWeight: 'bold' }} />
+              <Chip label={project.type.toUpperCase()} size="small" variant="outlined" />
               <Chip label={`${project.memberCount} miembros`} size="small" variant="outlined" />
             </Box>
             {project.description && (
@@ -321,13 +354,13 @@ const ProjectPage: React.FC = () => {
       <Grid container spacing={3}>
         {/* Estadísticas del Proyecto */}
         <Grid size={{ xs: 12, md: 3 }}>
-          <Card>
+          <Card sx={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Assignment color="primary" sx={{ mr: 2 }} />
-                <Typography variant="h6">Tareas</Typography>
+                <Typography variant="h6" color="text.secondary">Tareas</Typography>
               </Box>
-              <Typography variant="h4" color="primary">
+              <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
                 {project.statistics.totalTasks}
               </Typography>
             </CardContent>
@@ -335,13 +368,13 @@ const ProjectPage: React.FC = () => {
         </Grid>
 
         <Grid size={{ xs: 12, md: 3 }}>
-          <Card>
+          <Card sx={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <TrendingUp color="success" sx={{ mr: 2 }} />
-                <Typography variant="h6">Completadas</Typography>
+                <Typography variant="h6" color="text.secondary">Completadas</Typography>
               </Box>
-              <Typography variant="h4" color="success.main">
+              <Typography variant="h4" color="success.main" sx={{ fontWeight: 'bold' }}>
                 {project.statistics.completedTasks}
               </Typography>
             </CardContent>
@@ -349,13 +382,13 @@ const ProjectPage: React.FC = () => {
         </Grid>
 
         <Grid size={{ xs: 12, md: 3 }}>
-          <Card>
+          <Card sx={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <People color="secondary" sx={{ mr: 2 }} />
-                <Typography variant="h6">Miembros</Typography>
+                <Typography variant="h6" color="text.secondary">Miembros</Typography>
               </Box>
-              <Typography variant="h4" color="secondary">
+              <Typography variant="h4" color="secondary" sx={{ fontWeight: 'bold' }}>
                 {project.memberCount}
               </Typography>
             </CardContent>
@@ -363,13 +396,13 @@ const ProjectPage: React.FC = () => {
         </Grid>
 
         <Grid size={{ xs: 12, md: 3 }}>
-          <Card>
+          <Card sx={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Schedule color="warning" sx={{ mr: 2 }} />
-                <Typography variant="h6">Sprints</Typography>
+                <Typography variant="h6" color="text.secondary">Sprints</Typography>
               </Box>
-              <Typography variant="h4" color="warning.main">
+              <Typography variant="h4" color="warning.main" sx={{ fontWeight: 'bold' }}>
                 {project.statistics.activeSprints}
               </Typography>
             </CardContent>
@@ -378,25 +411,184 @@ const ProjectPage: React.FC = () => {
 
         {/* Tabs */}
         <Grid size={{ xs: 12 }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 1 }}>
             <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)}>
-              <Tab label="Tareas" />
-              <Tab label="Miembros" />
-              <Tab label="Actividad" />
+              <Tab label="Tablero Kanban" sx={{ fontWeight: 'bold', textTransform: 'none' }} />
+              <Tab label="Lista de Tareas" sx={{ fontWeight: 'bold', textTransform: 'none' }} />
+              <Tab label="Miembros" sx={{ fontWeight: 'bold', textTransform: 'none' }} />
             </Tabs>
           </Box>
 
+          {/* TAB 0: TABLERO KANBAN */}
           <TabPanel value={tabValue} index={0}>
-            <TableContainer component={Paper}>
+            <Box sx={{ display: 'flex', gap: 2, overflowX: 'auto', pb: 3, pt: 1, flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
+              {KANBAN_STATUSES.map((col) => {
+                const colTasks = tasks.filter((t) => t.status === col.key);
+                return (
+                  <Box 
+                    key={col.key} 
+                    sx={{ 
+                      flex: 1, 
+                      minWidth: '240px', 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      gap: 2,
+                      bgcolor: '#f8fafc',
+                      p: 2,
+                      borderRadius: '12px',
+                      borderTop: `4px solid ${col.color}`,
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+                      maxHeight: '750px',
+                      overflowY: 'auto'
+                    }}
+                  >
+                    {/* Header de la columna */}
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 'bold', color: '#475569', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        {col.label}
+                      </Typography>
+                      <Chip 
+                        label={colTasks.length} 
+                        size="small" 
+                        sx={{ 
+                          bgcolor: 'rgba(0,0,0,0.05)', 
+                          fontWeight: 'bold',
+                          color: '#475569',
+                          fontSize: '11px' 
+                        }} 
+                      />
+                    </Box>
+
+                    {/* Contenedor de las tarjetas */}
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, flexGrow: 1 }}>
+                      {colTasks.length === 0 ? (
+                        <Box 
+                          sx={{ 
+                            border: '2px dashed rgba(0,0,0,0.05)', 
+                            borderRadius: '8px', 
+                            py: 3, 
+                            textAlign: 'center',
+                            color: 'text.secondary',
+                            fontStyle: 'italic',
+                            fontSize: '13px'
+                          }}
+                        >
+                          Arrastra tareas aquí
+                        </Box>
+                      ) : (
+                        colTasks.map((task) => (
+                          <Paper
+                            key={task.id}
+                            variant="outlined"
+                            sx={{
+                              p: 1.8,
+                              borderRadius: '10px',
+                              borderLeft: `4px solid ${getPriorityHexColor(task.priority)}`,
+                              boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
+                              transition: 'transform 0.15s, box-shadow 0.15s',
+                              cursor: 'pointer',
+                              '&:hover': {
+                                transform: 'translateY(-2px)',
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.08)',
+                              }
+                            }}
+                            onClick={() => handleOpenTaskDetails(task.id)}
+                          >
+                            {/* Fila superior: Tipo e ID */}
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.2 }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                {getTaskTypeIcon(task.type)}
+                                <Typography variant="caption" sx={{ fontWeight: 'bold', color: '#64748B' }}>
+                                  {task.fullKey}
+                                </Typography>
+                              </Box>
+                              <Chip 
+                                label={task.priority} 
+                                size="small" 
+                                color={getPriorityColor(task.priority) as any} 
+                                sx={{ height: '18px', fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase' }} 
+                              />
+                            </Box>
+
+                            {/* Título de la Tarea */}
+                            <Typography variant="body2" sx={{ fontWeight: 'bold', color: '#1E293B', mb: 1.8, lineHeight: 1.3 }}>
+                              {task.title}
+                            </Typography>
+
+                            {/* Fila inferior: Asignado y Acciones Rápidas */}
+                            <Box 
+                              sx={{ 
+                                display: 'flex', 
+                                justifyContent: 'space-between', 
+                                alignItems: 'center',
+                                borderTop: '1px solid rgba(0,0,0,0.04)',
+                                pt: 1.2
+                              }}
+                              onClick={(e) => e.stopPropagation()} // Evita abrir la modal al interactuar aquí
+                            >
+                              {/* Selector rápido de estado */}
+                              <FormControl size="small" variant="standard" sx={{ m: 0 }}>
+                                <Select
+                                  value={task.status}
+                                  onChange={(e) => handleQuickStatusChange(task.id, e.target.value as Task['status'])}
+                                  disableUnderline
+                                  sx={{ 
+                                    fontSize: '11px', 
+                                    fontWeight: 'bold', 
+                                    color: '#475569',
+                                    bgcolor: 'rgba(0,0,0,0.04)',
+                                    borderRadius: '6px',
+                                    px: 1,
+                                    py: 0.2,
+                                    height: '24px'
+                                  }}
+                                >
+                                  <MenuItem value="todo" style={{ fontSize: '11px' }}>Por Hacer</MenuItem>
+                                  <MenuItem value="in-progress" style={{ fontSize: '11px' }}>En Progreso</MenuItem>
+                                  <MenuItem value="in-review" style={{ fontSize: '11px' }}>En Revisión</MenuItem>
+                                  <MenuItem value="blocked" style={{ fontSize: '11px' }}>Bloqueado</MenuItem>
+                                  <MenuItem value="done" style={{ fontSize: '11px' }}>Completado</MenuItem>
+                                </Select>
+                              </FormControl>
+
+                              {/* Avatar de asignado */}
+                              {task.assignee ? (
+                                <Tooltip title={`Asignado a: ${task.assignee.fullName}`}>
+                                  <Avatar 
+                                    src={task.assignee.avatar} 
+                                    sx={{ width: 24, height: 24, fontSize: '11px', fontWeight: 'bold', bgcolor: 'primary.light' }}
+                                  >
+                                    {task.assignee.fullName.charAt(0)}
+                                  </Avatar>
+                                </Tooltip>
+                              ) : (
+                                <Tooltip title="Sin asignar">
+                                  <Avatar sx={{ width: 24, height: 24, fontSize: '11px', bgcolor: 'grey.300', color: '#fff' }}>?</Avatar>
+                                </Tooltip>
+                              )}
+                            </Box>
+                          </Paper>
+                        ))
+                      )}
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
+          </TabPanel>
+
+          {/* TAB 1: LISTA DE TAREAS (Original Table) */}
+          <TabPanel value={tabValue} index={1}>
+            <TableContainer component={Paper} sx={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.04)' }}>
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Tarea</TableCell>
-                    <TableCell>Tipo</TableCell>
-                    <TableCell>Prioridad</TableCell>
-                    <TableCell>Estado</TableCell>
-                    <TableCell>Asignado</TableCell>
-                    <TableCell>Acciones</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }}>Tarea</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }}>Tipo</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }}>Prioridad</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }}>Estado</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }}>Asignado</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }}>Acciones</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -420,15 +612,15 @@ const ProjectPage: React.FC = () => {
                     </TableRow>
                   ) : (
                     tasks.map((task) => (
-                      <TableRow key={task.id}>
+                      <TableRow key={task.id} hover>
                         <TableCell>
                           <Box>
-                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                            <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'primary.main', cursor: 'pointer' }} onClick={() => handleOpenTaskDetails(task.id)}>
                               {task.fullKey} - {task.title}
                             </Typography>
                             {task.description && (
                               <Typography variant="caption" color="text.secondary">
-                                {task.description.substring(0, 100)}...
+                                {task.description.substring(0, 80)}...
                               </Typography>
                             )}
                           </Box>
@@ -436,19 +628,19 @@ const ProjectPage: React.FC = () => {
                         <TableCell>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             {getTaskTypeIcon(task.type)}
-                            <Chip label={task.type} size="small" color={getTaskTypeColor(task.type) as any} />
+                            <Chip label={task.type} size="small" color={getTaskTypeColor(task.type) as any} sx={{ fontWeight: 'bold' }} />
                           </Box>
                         </TableCell>
                         <TableCell>
-                          <Chip label={task.priority} size="small" color={getPriorityColor(task.priority) as any} />
+                          <Chip label={task.priority} size="small" color={getPriorityColor(task.priority) as any} sx={{ fontWeight: 'bold' }} />
                         </TableCell>
                         <TableCell>
-                          <Chip label={task.status} size="small" color={getStatusColor(task.status) as any} />
+                          <Chip label={task.status} size="small" color={getStatusColor(task.status) as any} sx={{ fontWeight: 'bold' }} />
                         </TableCell>
                         <TableCell>
                           {task.assignee ? (
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                              <Avatar src={task.assignee.avatar} sx={{ width: 24, height: 24 }}>
+                              <Avatar src={task.assignee.avatar} sx={{ width: 24, height: 24, fontSize: '11px', fontWeight: 'bold' }}>
                                 {task.assignee.fullName.charAt(0)}
                               </Avatar>
                               <Typography variant="body2">
@@ -477,32 +669,30 @@ const ProjectPage: React.FC = () => {
             </TableContainer>
           </TabPanel>
 
-          <TabPanel value={tabValue} index={1}>
-            <List>
-              {project.members.map((member) => (
-                <React.Fragment key={member.user.id}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar src={member.user.avatar}>
-                        {member.user.fullName.charAt(0)}
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={member.user.fullName}
-                      secondary={`${member.user.email} - ${member.role}`}
-                    />
-                    <Chip label={member.role} size="small" />
-                  </ListItem>
-                  <Divider variant="inset" component="li" />
-                </React.Fragment>
-              ))}
-            </List>
-          </TabPanel>
-
+          {/* TAB 2: MIEMBROS */}
           <TabPanel value={tabValue} index={2}>
-            <Typography variant="body1" color="text.secondary" align="center" sx={{ py: 4 }}>
-              Actividad del proyecto próximamente...
-            </Typography>
+            <Paper sx={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', p: 1 }}>
+              <List>
+                {project.members.map((member, index) => (
+                  <React.Fragment key={member.user.id}>
+                    {index > 0 && <Divider variant="inset" component="li" />}
+                    <ListItem sx={{ py: 1.5 }}>
+                      <ListItemAvatar>
+                        <Avatar src={member.user.avatar} sx={{ fontWeight: 'bold' }}>
+                          {member.user.fullName.charAt(0)}
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={member.user.fullName}
+                        secondary={`${member.user.email} - Rol en proyecto: ${member.role.toUpperCase()}`}
+                        slotProps={{ primary: { sx: { fontWeight: 'bold' } } }}
+                      />
+                      <Chip label={member.role.toUpperCase()} size="small" color={member.role === 'admin' ? 'primary' : 'default'} sx={{ fontWeight: 'bold' }} />
+                    </ListItem>
+                  </React.Fragment>
+                ))}
+              </List>
+            </Paper>
           </TabPanel>
         </Grid>
       </Grid>
