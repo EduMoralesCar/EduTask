@@ -124,3 +124,26 @@ npm start
 - La API (Backend) estará escuchando peticiones en: `http://localhost:5000`
 
 ---
+
+## 👥 Cuentas de Prueba Sembradas (Seeded Test Accounts)
+
+Para facilitar la evaluación y desarrollo rápido de la plataforma, hemos incluido un script de sembrado de datos (`seed.js`) en el backend que poblará la base de datos MongoDB con proyectos ágiles y usuarios de prueba listos para interactuar.
+
+Para sembrar la base de datos en cualquier momento, ejecuta:
+```bash
+cd backend
+node seed.js
+```
+
+### 🔐 Credenciales Disponibles:
+
+| Nombre | Rol asignado | Correo Electrónico (Email) | Contraseña | Nombre de Usuario |
+| :--- | :--- | :--- | :--- | :--- |
+| **Eduardo Administrador** | **Owner / Administrador** | `edumoraloscarlos@gmail.com` | `Password123` | `edu_admin` |
+| **Diana Desarrolladora** | **Desarrollador** | `diana.dev@edutask.com` | `Password123` | `diana_dev` |
+| **Tomas Tester** | **Tester** | `tomas.tester@edutask.com` | `Password123` | `tomas_tester` |
+
+> 💡 **Nota sobre el botón rápido de Google:** En la pantalla de inicio de sesión, al hacer clic sobre el botón de **"Google"**, el sistema intentará autenticarte de forma automatizada y preferencial con tu nueva cuenta real registrada (`edumoralescarlos@gmail.com` con `Admin123`) o con la cuenta administradora semilla (`edumoraloscarlos@gmail.com` con `Password123`).
+
+---
+
