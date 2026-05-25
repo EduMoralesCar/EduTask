@@ -35,13 +35,11 @@ class EmailService {
 
   async sendPasswordResetEmail(user, token) {
     try {
-      const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${token}`;
-      
       const mailOptions = {
         from: `"EduTask" <${process.env.SMTP_USER}>`,
         to: user.email,
         subject: 'Restablecer tu contraseña - EduTask',
-        html: this.getPasswordResetEmailTemplate(user, resetUrl)
+        html: this.getPasswordResetEmailTemplate(user, token)
       };
 
       await this.transporter.sendMail(mailOptions);
