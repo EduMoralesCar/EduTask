@@ -17,13 +17,15 @@ const app = express();
 // Middleware de seguridad
 app.use(helmet());
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutos
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100, // límite de 100 solicitudes por ventana
-  message: 'Demasiadas solicitudes desde esta IP, por favor intente nuevamente más tarde.'
-});
-app.use(limiter);
+// Rate limiting (solo activo en producción para evitar bloqueos por refrescos y pruebas locales)
+if (process.env.NODE_ENV === 'production') {
+  const limiter = rateLimit({
+    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutos
+    max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100, // límite de 100 solicitudes por ventana
+    message: 'Demasiadas solicitudes desde esta IP, por favor intente nuevamente más tarde.'
+  });
+  app.use(limiter);
+}
 
 // CORS
 app.use(cors({

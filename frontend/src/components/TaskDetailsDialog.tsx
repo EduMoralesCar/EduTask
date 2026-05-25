@@ -260,10 +260,35 @@ const TaskDetailsDialog: React.FC<TaskDetailsDialogProps> = ({ open, onClose, ta
                 />
               </Box>
               
-              {/* Fake comments display since API model might not populate them yet */}
-              <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-                El historial de actividad se mostrará aquí.
-              </Typography>
+              {/* Comments History List */}
+              {task.comments && task.comments.length > 0 ? (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxHeight: 300, overflowY: 'auto', pr: 1 }}>
+                  {task.comments.map((comment) => (
+                    <Paper key={comment.id || comment.createdAt} variant="outlined" sx={{ p: 1.5, bgcolor: '#f8fafc', borderRadius: '8px' }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <Avatar sx={{ width: 24, height: 24, bgcolor: 'secondary.main', fontSize: '11px', fontWeight: 'bold' }} src={comment.author?.avatar}>
+                            {comment.author?.firstName?.charAt(0) || comment.author?.username?.charAt(0) || '?'}
+                          </Avatar>
+                          <Typography variant="subtitle2" sx={{ fontWeight: 'bold', fontSize: '13px' }}>
+                            {comment.author?.fullName || comment.author?.username || 'Usuario'}
+                          </Typography>
+                        </Box>
+                        <Typography variant="caption" color="text.secondary">
+                          {new Date(comment.createdAt).toLocaleString()}
+                        </Typography>
+                      </Box>
+                      <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', color: 'text.primary', pl: 0.5 }}>
+                        {comment.content}
+                      </Typography>
+                    </Paper>
+                  ))}
+                </Box>
+              ) : (
+                <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', pl: 1 }}>
+                  No hay comentarios en esta tarea aún.
+                </Typography>
+              )}
             </Box>
 
             {/* Sidebar (Right) */}

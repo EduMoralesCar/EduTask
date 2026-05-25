@@ -211,7 +211,7 @@ taskSchema.index({ epic: 1 });
 taskSchema.index({ parent: 1 });
 
 // Middleware para generar número de tarea automáticamente
-taskSchema.pre('save', async function(next) {
+taskSchema.pre('validate', async function(next) {
   if (this.isNew && !this.number) {
     try {
       const Project = mongoose.model('Project');
