@@ -21,7 +21,7 @@ Similar a herramientas de la industria como JIRA, EduTask permite a los equipos 
 ✨ **Características Destacadas:**
 - **Seguridad:** Sistema de autenticación robusto con JWT y roles de usuario.
 - **Interactividad:** Tableros Kanban dinámicos para el seguimiento de tareas.
-- 👥 **Colaboración:** Gestión de miembros, invitaciones por correo y notificaciones.
+- **Colaboración:** Gestión de miembros, invitaciones por correo y notificaciones.
 - 🎯 **Agilidad:** Soporte nativo para sprints, épicas, historias de usuario y estimaciones.
 
 ---
