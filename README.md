@@ -143,7 +143,5 @@ node seed.js
 | **Diana Desarrolladora** | **Desarrollador** | `diana.dev@edutask.com` | `Password123` | `diana_dev` |
 | **Tomas Tester** | **Tester** | `tomas.tester@edutask.com` | `Password123` | `tomas_tester` |
 
-> 💡 **Nota sobre el botón rápido de Google:** En la pantalla de inicio de sesión, al hacer clic sobre el botón de **"Google"**, el sistema intentará autenticarte de forma automatizada y preferencial con tu nueva cuenta real registrada (`edumoralescarlos@gmail.com` con `Admin123`) o con la cuenta administradora semilla (`edumoraloscarlos@gmail.com` con `Password123`).
 
 ---
-
